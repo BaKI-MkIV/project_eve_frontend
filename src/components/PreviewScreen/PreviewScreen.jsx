@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import styles from './PreviewScreen.module.css';
 import { loginUser, fetchCurrentUser, fetchCurrentActor, logoutUser } from '../../api/auth';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function PreviewScreen() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -9,6 +11,9 @@ export default function PreviewScreen() {
     const [currentUser, setCurrentUser] = useState(null);
     const [currentActor, setCurrentActor] = useState(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+
+
 
     useEffect(() => {
         const token = localStorage.getItem('access_token');
@@ -50,8 +55,7 @@ export default function PreviewScreen() {
     };
 
     const handleContinue = () => {
-        // Пока заглушка — сюда потом переход в игру
-        console.log('Продолжить игру с текущим аккаунтом');
+        navigate('/main');
     };
 
     const handleLogout = () => {
