@@ -1,0 +1,39 @@
+:root {
+    --color-bg: #100803;
+    --color-text: #E8D5B7;
+    --color-accent-light: #B8956F;
+    --color-accent-mid: #E8D5B7;
+    --color-hover-underline: #B22400;
+
+    --font-main: 'Skandal', sans-serif;
+    --font-alt: 'TitilliumRus', sans-serif;
+}
+
+
+@font-face {
+    font-family: 'Skandal';
+    src: url('assets/fonts/Skandal.ttf') format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'TitilliumRus';
+    src: url('assets/fonts/titilliumwebrusbydaymarius_rg.ttf') format('truetype');
+    font-display: swap;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-main), sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    text-rendering: geometricPrecision;
+
+}
