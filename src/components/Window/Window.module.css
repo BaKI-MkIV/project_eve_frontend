@@ -1,0 +1,62 @@
+.window {
+    position: absolute;
+    background: rgba(16, 8, 3, 0.9); /* --color-bg с 90% opacity для видимости */
+    border: 2px solid var(--color-accent-light, #B8956F);
+    border-radius: 8px;
+    overflow: auto; /* Прокрутка если контент больше */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    min-width: 200px; /* Мин размер */
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    cursor: default;
+    user-select: none; /* Чтобы не выделялся текст при драге */
+}
+
+.titleBar {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move; /* Курсор для драга */
+    border-bottom: 1px solid var(--color-accent-light, #B8956F);
+    color: var(--color-text);
+    font-weight: bold;
+}
+
+.title {
+    flex: 1;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    color: var(--color-accent-light, #B8956F);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 8px;
+}
+
+.closeButton:hover {
+    color: var(--color-text)
+}
+
+.content {
+    flex: 1;
+    padding: 12px;
+    color: var(--color-text);
+    overflow: auto; /* Прокрутка контента */
+}
+
+.resizeHandle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    background: transparent;
+    cursor: se-resize; /* Курсор для ресайза */
+    border-bottom: 2px solid var(--color-accent-light, #B8956F);
+    border-right: 2px solid var(--color-accent-light, #B8956F);
+}

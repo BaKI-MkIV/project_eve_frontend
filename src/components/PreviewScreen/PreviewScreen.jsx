@@ -131,18 +131,18 @@ export default function PreviewScreen() {
                 <div className={styles.buttons}>
                     {!isAuthenticated ? (
                         <>
-                            <button onClick={handleLogin} className={styles.button}>
+                            <button onClick={handleLogin} className="button">
                                 ВОЙТИ
                             </button>
 
-                            <button className={styles.button} style={{ visibility: 'hidden' }}></button>
+                            <button className="button" style={{ visibility: 'hidden' }}></button>
                         </>
                     ) : (
                         <>
-                            <button onClick={handleContinue} className={styles.button}>
+                            <button onClick={handleContinue} className="button">
                                 ПРОДОЛЖИТЬ С ЭТИМ АККАУНТОМ
                             </button>
-                            <button onClick={handleLogout} className={styles.button}>
+                            <button onClick={handleLogout} className="button">
                                 ВЫЙТИ
                             </button>
                         </>

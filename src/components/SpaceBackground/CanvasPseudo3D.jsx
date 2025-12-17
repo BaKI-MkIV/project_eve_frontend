@@ -185,7 +185,7 @@ export default function CanvasPseudo3D({ selected, onSelect, planet, moons }) {
     return (
         <Canvas
             orthographic
-            camera={{ position: [0, 30, 0], zoom: 30, near: 0.1, far: 100 }}
+            camera={{ position: [0, 30, 0], zoom: 25, near: 0.1, far: 100 }}
         >
 
             <ambientLight intensity={0.4} />

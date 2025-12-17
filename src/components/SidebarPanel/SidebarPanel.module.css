@@ -1,0 +1,108 @@
+.sidebar {
+    position: fixed;
+    top: 40px;
+    left: 40px;
+    bottom: 40px;
+    width: 100px;
+    background: rgba(16, 8, 3, 0.2); /* --color-bg с 20% opacity */
+    z-index: 50;
+    pointer-events: none; /* Чтобы панель не мешала кликам под ней */
+}
+
+.iconsContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 24px;
+    padding-top: 40px; /* Чтобы иконки не налезали на верхние углы */
+    pointer-events: auto; /* Только иконки кликабельны/ховерятся */
+}
+
+.iconWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    color: var(--color-accent-light, #B8956F);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.icon:hover {
+    transform: scale(1.15);
+}
+
+/* Tooltip */
+.tooltip {
+    position: absolute;
+    left: 150%; /* Немного дальше от панели */
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    color: var(--color-accent-light, #B8956F);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: var(--font-size-s);
+    font-family: var(--font-alt), serif;
+    font-weight: 700;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.iconWrapper:hover .tooltip {
+    opacity: 1;
+}
+
+/* Углы рамки */
+.cornerTL,
+.cornerTR,
+.cornerBL,
+.cornerBR {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-accent-light, #B8956F);
+}
+
+.cornerTL {
+    top: -2px;
+    left: -2px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.cornerTR {
+    top: -2px;
+    right: -2px;
+    border-left: none;
+    border-bottom: none;
+}
+
+.cornerBL {
+    bottom: -2px;
+    left: -2px;
+    border-right: none;
+    border-top: none;
+}
+
+.cornerBR {
+    bottom: -2px;
+    right: -2px;
+    border-left: none;
+    border-top: none;
+}
