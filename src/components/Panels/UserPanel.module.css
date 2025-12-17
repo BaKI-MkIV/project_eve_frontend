@@ -1,4 +1,5 @@
 /* src/components/Panels/UserPanel.module.css */
+
 .container {
     width: 100%;
     height: 100%;
@@ -8,26 +9,18 @@
     flex-direction: column;
     align-items: center;
     color: var(--color-text);
-    overflow-y: auto;
-    gap: 1rem; /* добавим отступы между блоками */
+    gap: 1.5rem; /* чуть больше воздуха */
+    /* УБРАЛИ overflow-y: auto — теперь скролл только от .content в Window */
 }
 
 .info {
     text-align: center;
     font-size: 1.5rem;
     line-height: 1.6;
-    margin-bottom: 1rem;
 }
 
 .info strong {
     color: var(--color-accent-light);
-}
-
-.error {
-    color: #e74c3c;
-    font-size: 1.3rem;
-    min-height: 1.5em;
-    text-align: center;
 }
 
 .brushLine {
@@ -44,7 +37,7 @@
     );
     border-radius: 50%;
     filter: blur(0.5px);
-    margin: 2rem 0;
+    margin: 1.5rem 0;
 }
 
 .field {
@@ -54,120 +47,11 @@
     gap: 0.8rem;
     width: 100%;
     max-width: 20rem;
+
 }
 
-.label {
+.message {
+    color: var(--color-text);
     font-size: 1.5rem;
-    color: var(--color-text);
-    margin-bottom: 0.5rem;
-}
-
-.input {
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid rgba(184, 149, 111, 0.3);
-    color: var(--color-text);
-    font-family: var(--font-main);
-    font-size: 1.5rem;
-    text-align: center;
-    padding: 0.5rem 0;
-    width: 100%;
-    outline: none;
-    transition: border-color 0.3s ease;
-}
-
-.input:focus {
-    border-color: var(--color-accent-light);
-}
-
-.input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
-}
-
-
-/* Кнопка выхода — отдельный стиль */
-.logoutButton {
-    font-size: 1.4rem;
-    padding: 0.8rem 2.5rem;
-    margin-top: 1rem;
-    background: rgba(231, 76, 60, 0.2);
-    border: 2px solid #e74c3c;
-    color: #e74c3c;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    font-family: var(--font-main);
-}
-
-.logoutButton:hover {
-    background: rgba(231, 76, 60, 0.4);
-    color: #fff;
-    border-color: #fff;
-}
-
-/* Скроллбар */
-.container::-webkit-scrollbar {
-    width: 8px;
-}
-
-.container::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.container::-webkit-scrollbar-thumb {
-    background: rgba(184, 149, 111, 0.3);
-    border-radius: 4px;
-}
-
-.container::-webkit-scrollbar-thumb:hover {
-    background: var(--color-accent-light);
-}
-
-/* Основная кнопка */
-.button {
-    font-size: 1.4rem;
-    padding: 0.6rem 2rem;
-    width: 100%;
-    max-width: 20rem;
-    background: transparent;
-    border: 2px solid var(--color-accent-light);
-    color: var(--color-accent-light);
-    cursor: pointer;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    font-family: var(--font-main);
-}
-
-
-.button {
-    font-family: var(--font-alt);
-    color: var(--color-text);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    transition: transform 0.3s ease, letter-spacing 0.3s ease;
-}
-
-.button::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: var(--color-hover-underline);
-    transition: all 0.4s ease;
-    border-radius: 50%;
-    filter: blur(0.5px);
-    transform: translateX(-50%);
-}
-
-.button:hover {
-    transform: scale(1.1);
-    letter-spacing: 0.1em;
-}
-
-.button:hover::after {
-    width: 80%;
+    padding: 2rem;
 }

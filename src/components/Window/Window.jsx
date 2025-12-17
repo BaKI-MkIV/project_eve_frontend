@@ -1,4 +1,4 @@
-// components/Window/Window.jsx
+/* components/Window/Window.jsx */
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Window.module.css";
 
@@ -9,30 +9,30 @@ export default function Window({
                                    zIndex = 10,
                                    bringToFront,
                                }) {
-    // Смещение для новых окон (чтобы не накладывались)
-    const offset = React.useMemo(() => ({
-        x: Math.random() * 100 - 50,
-        y: Math.random() * 100 - 50,
-    }), []);
+    const offset = React.useMemo(
+        () => ({ x: Math.random() * 100 - 50, y: Math.random() * 100 - 50 }),
+        []
+    );
 
     const [position, setPosition] = useState({
         x: window.innerWidth / 2 - 300 + offset.x,
         y: window.innerHeight / 2 - 200 + offset.y,
     });
 
-    const [size, setSize] = useState({ width: "40vw", height: "25vh" });
+    /* Начальный размер — auto, чтобы подстраиваться под контент */
+    const [size, setSize] = useState({ width: "auto", height: "auto" });
+
     const [isDragging, setIsDragging] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
     const windowRef = useRef(null);
 
-    // Поднимаем окно при монтировании и при клике
     useEffect(() => {
         if (bringToFront) bringToFront();
     }, [bringToFront]);
 
     const handleMouseDown = (e, type) => {
-        e.stopPropagation(); // Важно!
+        e.stopPropagation();
         if (bringToFront) bringToFront();
 
         if (type === "drag") {
@@ -56,8 +56,9 @@ export default function Window({
             const vw = window.innerWidth;
             const vh = window.innerHeight;
 
-            newX = Math.max(-winWidth / 2, Math.min(newX, vw - winWidth / 2));
-            newY = Math.max(-winHeight / 2, Math.min(newY, vh - winHeight / 2));
+            /* Не даём полностью улететь за экран (минимум 50% видно) */
+            newX = Math.max(-winWidth + 100, Math.min(newX, vw - 100));
+            newY = Math.max(-winHeight + 100, Math.min(newY, vh - 100));
 
             setPosition({ x: newX, y: newY });
         } else if (isResizing && windowRef.current) {
@@ -65,8 +66,8 @@ export default function Window({
             let newWidth = e.clientX - rect.left;
             let newHeight = e.clientY - rect.top;
 
-            newWidth = Math.max(300, newWidth);  // мин. ширина
-            newHeight = Math.max(200, newHeight); // мин. высота
+            newWidth = Math.max(300, newWidth);
+            newHeight = Math.max(200, newHeight);
 
             setSize({ width: `${newWidth}px`, height: `${newHeight}px` });
         }
@@ -99,7 +100,7 @@ export default function Window({
                 height: size.height,
                 zIndex: zIndex,
             }}
-            onMouseDown={bringToFront} // Клик в любом месте окна поднимает его наверх
+            onMouseDown={bringToFront}
         >
             <div
                 className={styles.titleBar}
@@ -110,7 +111,10 @@ export default function Window({
                     ×
                 </button>
             </div>
+
             <div className={styles.content}>{children}</div>
+
+
             <div
                 className={styles.resizeHandle}
                 onMouseDown={(e) => handleMouseDown(e, "resize")}

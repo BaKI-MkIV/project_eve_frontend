@@ -15,10 +15,10 @@ export default function UserPanel() {
     const navigate = useNavigate();
     const token = localStorage.getItem('access_token');
 
-    if (loading) return <div className={styles.message}>Загрузка...</div>;
-    if (!user) return <div className={styles.message}>Не авторизован</div>;
+    if (loading) return <div className={styles.message}>Загрузка...</div>; // Без изменений
+    if (!user) return <div className={styles.message}>Не авторизован</div>; // Без изменений
 
-    const registrationDate = new Date(user.created_at).toLocaleDateString('ru-RU');
+    const registrationDate = new Date(user.created_at).toLocaleDateString('ru-RU'); // Без изменений
 
     const handleChangeLogin = async () => {
         setActionError('');
@@ -33,7 +33,7 @@ export default function UserPanel() {
         } catch (err) {
             setActionError(err.message);
         }
-    };
+    }; // Без изменений
 
     const handleChangePassword = async () => {
         setActionError('');
@@ -50,17 +50,16 @@ export default function UserPanel() {
         } catch (err) {
             setActionError(err.message);
         }
-    };
+    }; // Без изменений
 
     const handleLogout = () => {
         logoutUser();
         navigate('/');
-    };
+    }; // Без изменений
 
     return (
         <div className={styles.container}>
-            {/* Заголовок можно добавить, если хочешь */}
-            {/* <h2 className={styles.title}>Личный кабинет</h2> */}
+
 
             <div className={styles.info}>
                 <p><strong>Логин:</strong> {user.login}</p>
@@ -68,46 +67,46 @@ export default function UserPanel() {
             </div>
 
             {(loadError || actionError) && (
-                <p className={styles.error}>{loadError || actionError}</p>
+                <p className="error">{loadError || actionError}</p> // Изменено: убрал styles.error, теперь глобальный класс .error из Window
             )}
 
+
             <div className={styles.field}>
-                <label className={styles.label}>Сменить логин</label>
+                <label className="label">Сменить логин</label>
                 <input
-                    className={styles.input}
+                    className="input" // Изменено: убрал styles.input, теперь глобальный .input из Window
                     type="text"
                     value={newLogin}
                     onChange={(e) => setNewLogin(e.target.value)}
                     placeholder="Новый логин (латиница)"
                 />
-                <button className={styles.button} onClick={handleChangeLogin}>
+                <button className="button" onClick={handleChangeLogin}>
                     Изменить логин
                 </button>
             </div>
 
             <div className={styles.field}>
-                <label className={styles.label}>Сменить пароль</label>
+                <label className="label">Сменить пароль</label>
                 <input
-                    className={styles.input}
+                    className="input" // Изменено: убрал styles.input, теперь глобальный .input из Window
                     type="password"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     placeholder="Новый пароль"
                 />
                 <input
-                    className={styles.input}
+                    className="input" // Изменено: убрал styles.input, теперь глобальный .input из Window
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Повторите пароль"
                 />
-                <button className={styles.button} onClick={handleChangePassword}>
+                <button className="button" onClick={handleChangePassword}>
                     Изменить пароль
                 </button>
             </div>
 
-
-            <button className={styles.logoutButton} onClick={handleLogout}>
+            <button className="logoutButton" onClick={handleLogout}>
                 Выйти из аккаунта
             </button>
         </div>

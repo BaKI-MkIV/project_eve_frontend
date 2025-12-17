@@ -4,6 +4,7 @@
     --color-accent-light: #B8956F;
     --color-accent-mid: #E8D5B7;
     --color-hover-underline: #B22400;
+    --color-technical-text: #694F4F;
 
     --font-main: 'Skandal', sans-serif;
     --font-alt: 'TitilliumRus', sans-serif;
@@ -68,6 +69,7 @@ small {
     border: none;
     color: var(--color-text);
     font-family: var(--font-alt);
+    font-size: var(--font-size-s);
     cursor: pointer;
     transition: transform 0.3s ease, letter-spacing 0.3s ease;
     position: relative;

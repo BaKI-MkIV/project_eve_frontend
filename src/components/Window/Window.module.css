@@ -1,16 +1,21 @@
+/* components/Window/Window.module.css */
+
 .window {
     position: absolute;
-    background: rgba(16, 8, 3, 0.9); /* --color-bg с 90% opacity для видимости */
+    background: rgba(16, 8, 3, 0.9);
     border: 2px solid var(--color-accent-light, #B8956F);
     border-radius: 8px;
-    overflow: auto; /* Прокрутка если контент больше */
+    overflow: hidden; /* Важно: скрываем скролл на уровне окна */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    min-width: 200px; /* Мин размер */
-    min-height: 150px;
     display: flex;
     flex-direction: column;
     cursor: default;
-    user-select: none; /* Чтобы не выделялся текст при драге */
+    user-select: none;
+    width: auto;
+    height: auto;
+    min-width: 300px;
+    min-height: 200px;
+    /* Убраны max-width и max-height — полная свобода ресайза */
 }
 
 .titleBar {
@@ -19,10 +24,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    cursor: move; /* Курсор для драга */
+    cursor: move;
     border-bottom: 1px solid var(--color-accent-light, #B8956F);
     color: var(--color-text);
     font-weight: bold;
+    flex-shrink: 0;
 }
 
 .title {
@@ -39,24 +45,131 @@
 }
 
 .closeButton:hover {
-    color: var(--color-text)
+    color: var(--color-text);
 }
 
 .content {
     flex: 1;
     padding: 12px;
     color: var(--color-text);
-    overflow: auto; /* Прокрутка контента */
+    overflow: auto; /* Скролл только внутри контента */
 }
 
+
+
+:global(.logoutButton) {
+    font-size: 1.4rem;
+    padding: 0.8rem 2.5rem;
+    margin-top: 1rem;
+    background: rgba(231, 76, 60, 0.2);
+    border: 2px solid #e74c3c;
+    color: #e74c3c;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-family: var(--font-main);
+}
+
+:global(.logoutButton:hover) {
+    background: rgba(231, 76, 60, 0.4);
+    color: #fff;
+    border-color: #fff;
+}
+
+:global(.input) {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(184, 149, 111, 0.3);
+    color: var(--color-text);
+    font-family: var(--font-alt);
+    font-size: var(--font-size-s);
+    text-align: center;
+    padding: 0.5rem 0;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+:global(.input:focus) {
+    border-color: var(--color-accent-light);
+}
+
+:global(.input::placeholder) {
+    color: var(--color-technical-text)
+}
+
+:global(.label) {
+    font-size: 1.5rem;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+:global(.error) {
+    color: var(--color-hover-underline);
+    font-size: 1.3rem;
+    min-height: 1.5em;
+    text-align: center;
+}
+
+/* === Скроллбар — теперь стабильно работает после ресайза === */
+.content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.content::-webkit-scrollbar-thumb {
+    background: rgba(184, 149, 111, 0.3);
+    border-radius: 4px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent-light);
+}
+
+/* === Новый вариант уголка ресайза (вариант 2) === */
+/* Классический "диагональный гриппер" — тонкий, минималистичный, но заметный */
 .resizeHandle {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 16px;
-    height: 16px;
+    bottom: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    cursor: se-resize;
     background: transparent;
-    cursor: se-resize; /* Курсор для ресайза */
-    border-bottom: 2px solid var(--color-accent-light, #B8956F);
-    border-right: 2px solid var(--color-accent-light, #B8956F);
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 4px;
+    flex-direction: column;
+}
+
+.resizeHandle::before,
+.resizeHandle::after {
+    content: '';
+    width: 14px;
+    height: 2px;
+    background: var(--color-accent-light);
+    opacity: 0.5;
+    border-radius: 1px;
+    transition: all 0.3s ease;
+}
+
+.resizeHandle::after {
+    width: 10px;
+    margin-right: 4px;
+}
+
+.resizeHandle:hover::before,
+.resizeHandle:hover::after {
+    opacity: 1;
+    background: #fff;
+    width: 16px;
+}
+
+.resizeHandle:hover::after {
+    width: 12px;
 }
