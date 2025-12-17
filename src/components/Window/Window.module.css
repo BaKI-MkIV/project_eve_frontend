@@ -29,6 +29,7 @@
     color: var(--color-text);
     font-weight: bold;
     flex-shrink: 0;
+
 }
 
 .title {
@@ -172,4 +173,52 @@
 
 .resizeHandle:hover::after {
     width: 12px;
+}
+
+.windowControls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.controlButton {
+    background: none;
+    border: none;
+    color: var(--color-accent-light);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 4px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.controlButton:hover {
+    background: rgba(184, 149, 111, 0.3);
+    color: #fff;
+}
+
+.closeButton {
+    /* ... прежний стиль ... */
+    font-size: 1.4rem;
+    width: 28px;
+    height: 28px;
+}
+
+.maximized {
+    border-radius: 0;
+    /* Можно убрать тень при максимизации, если хочешь */
+}
+
+/* Скрываем ресайз при максимизации */
+.maximized .resizeHandle {
+    display: none;
+}
+
+.hidden {
+    display: none;
 }

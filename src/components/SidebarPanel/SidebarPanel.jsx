@@ -1,35 +1,36 @@
-// SidebarPanel.jsx
 import React from "react";
 import styles from "./SidebarPanel.module.css";
 import { FaStar } from "react-icons/fa";
 
-export default function SidebarPanel({ items = [], onOpenWindow }) {
-    const handleClick = (idx) => {
-        const item = items[idx];
-        if (item && item.content && onOpenWindow) {
-            onOpenWindow(idx, item.name, item.content);
-        }
+export default function SidebarPanel({
+                                         items = [],
+                                         onOpenWindow,
+                                         blinkingIcons = new Set(),
+                                     }) {
+    const handleClick = (item) => {
+        onOpenWindow?.(item);
     };
 
     return (
         <div className={styles.sidebar}>
-            {/* Углы рамки */}
-            <div className={styles.cornerTL}></div>
-            <div className={styles.cornerTR}></div>
-            <div className={styles.cornerBL}></div>
-            <div className={styles.cornerBR}></div>
+            <div className={styles.cornerTL} />
+            <div className={styles.cornerTR} />
+            <div className={styles.cornerBL} />
+            <div className={styles.cornerBR} />
 
             <div className={styles.iconsContainer}>
-                {items.map((item, idx) => (
+                {items.map((item) => (
                     <div
-                        key={idx}
-                        className={styles.iconWrapper}
-                        onClick={() => handleClick(idx)}
+                        key={item.id}
+                        className={`${styles.iconWrapper} ${
+                            blinkingIcons.has(item.id) ? styles.blinking : ""
+                        }`}
+                        onClick={() => handleClick(item)}
                     >
                         <div className={styles.icon}>
                             <FaStar size={40} />
                         </div>
-                        <span className={styles.tooltip}>{item.name}</span>
+                        <span className={styles.tooltip}>{item.title}</span>
                     </div>
                 ))}
             </div>
