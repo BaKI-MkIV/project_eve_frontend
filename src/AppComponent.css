@@ -1,0 +1,35 @@
+
+.button {
+    background: transparent;
+    border: none;
+    color: var(--color-text);
+    font-family: var(--font-alt);
+    font-size: var(--font-size-s);
+    cursor: pointer;
+    transition: transform 0.3s ease, letter-spacing 0.3s ease;
+    position: relative;
+
+}
+
+.button:hover {
+    transform: scale(1.2);
+    letter-spacing: 0.1em;
+}
+
+.button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--color-hover-underline);
+    transition: all 0.4s ease;
+    border-radius: 50%;
+    filter: blur(0.5px);
+    transform: translateX(-50%);
+}
+
+.button:hover::after {
+    width: 80%;
+}

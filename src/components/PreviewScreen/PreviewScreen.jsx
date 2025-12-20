@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './PreviewScreen.module.css';
-import { loginUser, fetchCurrentUser, fetchCurrentActor, logoutUser } from '../../api/auth';
+import { loginUser, fetchCurrentUser, fetchCurrentActor, logoutUser } from '../../api/services/authService';
 import { useNavigate } from 'react-router-dom';
-
 
 export default function PreviewScreen() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -11,29 +10,29 @@ export default function PreviewScreen() {
     const [currentUser, setCurrentUser] = useState(null);
     const [currentActor, setCurrentActor] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [loginLoading, setLoginLoading] = useState(false); // индикатор при логине
     const navigate = useNavigate();
-
-
 
     useEffect(() => {
         const token = localStorage.getItem('access_token');
         if (token) {
-            loadUserData(token);
+            loadUserData();
         } else {
             setLoading(false);
         }
     }, []);
 
-    const loadUserData = async (token) => {
+    const loadUserData = async () => {
         try {
-            const userData = await fetchCurrentUser(token);
+            const userData = await fetchCurrentUser();
             setCurrentUser(userData);
 
-            const actorData = await fetchCurrentActor(token);
+            const actorData = await fetchCurrentActor();
             setCurrentActor(actorData);
 
             setIsAuthenticated(true);
         } catch (err) {
+            console.error('Ошибка загрузки данных пользователя:', err);
             logoutUser();
         } finally {
             setLoading(false);
@@ -42,15 +41,22 @@ export default function PreviewScreen() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        if (!login || !password) {
+            alert('Введите логин и пароль');
+            return;
+        }
+
+        setLoginLoading(true);
         try {
-            const { access, refresh } = await loginUser(login, password);
-            localStorage.setItem('access_token', access);
-            localStorage.setItem('refresh_token', refresh);
-            await loadUserData(access);
+            await loginUser(login, password);
+            await loadUserData(); // перезагружаем данные после логина
             setLogin('');
             setPassword('');
         } catch (err) {
-            alert(err.message);
+            alert('Ошибка входа: неверный логин или пароль');
+            console.error(err);
+        } finally {
+            setLoginLoading(false);
         }
     };
 
@@ -66,7 +72,11 @@ export default function PreviewScreen() {
     };
 
     if (loading) {
-        return <div className={styles.container}>Загрузка...</div>;
+        return (
+            <div className={styles.container}>
+                <p>Загрузка...</p>
+            </div>
+        );
     }
 
     return (
@@ -85,7 +95,6 @@ export default function PreviewScreen() {
                 {!isAuthenticated ? (
                     <>
                         <div className={styles.field}>
-                            <div className={styles.label}></div>
                             <input
                                 type="text"
                                 className={styles.input}
@@ -93,11 +102,11 @@ export default function PreviewScreen() {
                                 onChange={(e) => setLogin(e.target.value)}
                                 placeholder="введите логин"
                                 autoComplete="username"
+                                disabled={loginLoading}
                             />
                         </div>
 
                         <div className={styles.field}>
-                            <div className={styles.label}></div>
                             <input
                                 type="password"
                                 className={styles.input}
@@ -105,22 +114,21 @@ export default function PreviewScreen() {
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="введите пароль"
                                 autoComplete="current-password"
+                                disabled={loginLoading}
                             />
                         </div>
                     </>
                 ) : (
                     <>
                         <div className={styles.field}>
-                            <div className={styles.label}></div>
                             <div className={styles.infoText}>
-                                {currentUser?.login || 'Пользователь'}
+                                Игрок: <strong>{currentUser?.login || 'Неизвестно'}</strong>
                             </div>
                         </div>
 
                         <div className={styles.field}>
-                            <div className={styles.label}></div>
                             <div className={styles.infoText}>
-                                {currentActor?.name || 'Актор не привязан'}
+                                Персонаж: <strong>{currentActor?.name || 'Не привязан'}</strong>
                             </div>
                         </div>
                     </>
@@ -130,13 +138,9 @@ export default function PreviewScreen() {
 
                 <div className={styles.button}>
                     {!isAuthenticated ? (
-                        <>
-                            <button onClick={handleLogin} className="button">
-                                ВОЙТИ
-                            </button>
-
-                            <button className="button" style={{ visibility: 'hidden' }}></button>
-                        </>
+                        <button onClick={handleLogin} className="button" disabled={loginLoading}>
+                            {loginLoading ? 'Вход...' : 'ВОЙТИ'}
+                        </button>
                     ) : (
                         <>
                             <button onClick={handleContinue} className="button">
@@ -148,8 +152,6 @@ export default function PreviewScreen() {
                         </>
                     )}
                 </div>
-
-
             </div>
         </div>
     );
