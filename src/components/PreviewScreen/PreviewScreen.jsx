@@ -128,7 +128,7 @@ export default function PreviewScreen() {
 
                 <div className={styles.brushLine} />
 
-                <div className={styles.buttons}>
+                <div className={styles.button}>
                     {!isAuthenticated ? (
                         <>
                             <button onClick={handleLogin} className="button">

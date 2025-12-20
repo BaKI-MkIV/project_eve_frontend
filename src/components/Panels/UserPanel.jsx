@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../api/auth';
 import { updateUser } from '../../api/user';
 import { useUser } from '../../hooks/useUser';
-import styles from './UserPanel.module.css';
+import styles from './Panel.module.css';
 
 export default function UserPanel() {
     const { user, loading, error: loadError, setUser, setError: setLoadError } = useUser();
@@ -26,7 +26,7 @@ export default function UserPanel() {
         if (/[а-яА-ЯёЁ]/.test(newLogin)) return setActionError('Логин не может содержать кириллицу');
 
         try {
-            const updated = await updateUser(token, { login: newLogin.trim() });
+            const updated = await updateUser({ login: newLogin.trim() });
             setUser(updated);
             setNewLogin('');
             alert('Логин успешно изменён');
@@ -43,14 +43,14 @@ export default function UserPanel() {
         if (/[а-яА-ЯёЁ]/.test(newPassword)) return setActionError('Пароль не может содержать кириллицу');
 
         try {
-            await updateUser(token, { password: newPassword });
+            await updateUser({ password: newPassword }); // ← без token!
             setNewPassword('');
             setConfirmPassword('');
             alert('Пароль успешно изменён');
         } catch (err) {
             setActionError(err.message);
         }
-    }; // Без изменений
+    };
 
     const handleLogout = () => {
         logoutUser();

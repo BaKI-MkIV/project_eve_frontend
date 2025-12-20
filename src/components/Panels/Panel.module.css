@@ -1,0 +1,148 @@
+.container {
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+
+    color: var(--color-text);
+}
+
+.field {
+    width: 100%;
+    max-width: 20rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.card {
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto;
+
+    padding: 1rem;
+    border: 1px solid var(--color-accent-mid);
+    border-radius: 8px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+}
+
+.card h4 {
+    margin: 0;
+}
+
+
+
+.message {
+    font-size: 1.5rem;
+    padding: 2rem;
+}
+
+textarea.input {
+    height: 2.5rem;
+    resize: none;
+}
+
+:global(textarea.input) {
+    height: 2.5rem;
+    resize: vertical;
+}
+
+.walletGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.walletItem {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.walletItem strong {
+    font-size: 1.3rem;
+    display: block;
+}
+
+.cardsContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+
+.card h4 {
+    margin: 0 0 0.5rem 0;
+    color: var(--color-accent-light);
+}
+
+
+
+.section {
+    margin-bottom: 20px;
+    border: 1px solid var(--color-accent-mid);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    border: 1px solid var(--color-accent-mid);
+    padding: 8px;
+    text-align: left;
+    font-family: var(--font-alt);
+}
+
+
+.jsonTextarea {
+    width: 80%;
+    height: 150px;
+    margin-top: 10px;
+    border: 1px solid var(--color-accent-mid);
+    padding: 10px;
+}
+
+.suggestions {
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+}
+
+.suggestion {
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+.suggestion:hover {
+    background: #f0f0f0;
+}

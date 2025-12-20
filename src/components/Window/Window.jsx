@@ -24,16 +24,27 @@ export default function Window({
         []
     );
 
-    const [position, setPosition] = useState(
-        previousPosition || {
-            x: window.innerWidth / 2 - 300 + offset.x,
-            y: window.innerHeight / 2 - 200 + offset.y,
-        }
-    );
+    const [position, setPosition] = useState(() => {
+        const maxWidth = window.innerWidth * 0.8;
+        const maxHeight = window.innerHeight * 0.6;
+        const width = Math.min(600, maxWidth); // стартовая ширина
+        const height = Math.min(400, maxHeight); // стартовая высота
 
-    const [size, setSize] = useState(
-        previousSize || { width: "auto", height: "auto" }
-    );
+        const x = Math.max(0, Math.min((window.innerWidth - width) / 2 + offset.x, window.innerWidth - width));
+        const y = Math.max(0, Math.min((window.innerHeight - height) / 2 + offset.y, window.innerHeight - height));
+
+        return { x, y };
+    });
+
+    const [size, setSize] = useState(() => {
+        const maxWidth = window.innerWidth * 0.8;
+        const maxHeight = window.innerHeight * 0.6;
+
+        return {
+            width: Math.min(600, maxWidth) + 'px',
+            height: Math.min(400, maxHeight) + 'px'
+        };
+    });
 
     const [isDragging, setIsDragging] = useState(false);
     const [isResizing, setIsResizing] = useState(false);

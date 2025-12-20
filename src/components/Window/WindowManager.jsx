@@ -1,47 +1,49 @@
+// src/components/WindowManager.jsx
+
 import React, { useState } from "react";
 import SidebarPanel from "../SidebarPanel/SidebarPanel.jsx";
 import Window from "../Window/Window.jsx";
 import UserPanel from "../Panels/UserPanel.jsx";
+import ActorPanel from "../Panels/ActorPanel.jsx";
+import WalletPanel from "../Panels/WalletPanel.jsx";
+import InventoryPanel from "../Panels/InventoryPanel.jsx";
+import DevPanel from "../Panels/DevPanel.jsx";
+import TransferPanel from "../Panels/TransferPanel.jsx"; // ← твоя консоль мастера
 
 /*
   ВАЖНО:
   - content → component
   - храним ССЫЛКУ на компонент, а не JSX
 */
-const defaultItems = [
+const allItems = [
     { id: "user", title: "Пользователь", component: UserPanel },
+    { id: "actor", title: "Персонаж", component: ActorPanel },
+    { id: "wallet", title: "Кошелёк", component: WalletPanel },
+    { id: "inventory", title: "Инвентарь", component: InventoryPanel },
+    // DevPanel — только для мастера
     {
-        id: "chars",
-        title: "Персонажи",
-        component: () => (
-            <div style={{ padding: "20px", color: "#fff" }}>
-                Персонажи (в разработке)
-            </div>
-        ),
+        id: "dev",
+        title: "🔧 DevMod",
+        component: DevPanel,
+        visibleFor: 'master'  // ← ключевой флаг
     },
-    {
-        id: "wallet",
-        title: "Кошелек",
-        component: () => (
-            <div style={{ padding: "20px", color: "#fff" }}>
-                Кошелёк (в разработке)
-            </div>
-        ),
-    },
-    {
-        id: "inventory",
-        title: "Инвентарь",
-        component: () => (
-            <div style={{ padding: "20px", color: "#fff" }}>
-                Инвентарь (в разработке)
-            </div>
-        ),
-    },
+    { id: "transfer", title: "Переводы", component: TransferPanel },
 ];
 
 export default function WindowManager() {
     const [windows, setWindows] = useState([]);
     const [blinkingIcons, setBlinkingIcons] = useState(new Set());
+
+    // Получаем роль один раз при рендере
+    const role = localStorage.getItem('role') || 'player';
+
+    // Фильтруем элементы боковой панели по роли
+    const sidebarItems = allItems.filter(item => {
+        if (item.visibleFor) {
+            return role === item.visibleFor;
+        }
+        return true;
+    });
 
     const bringToFront = (id) => {
         setWindows((prev) => {
@@ -69,10 +71,7 @@ export default function WindowManager() {
                             ? {
                                 ...w,
                                 isMinimized: false,
-                                zIndex:
-                                    Math.max(
-                                        ...prev.map((ww) => ww.zIndex)
-                                    ) + 1,
+                                zIndex: Math.max(...prev.map((ww) => ww.zIndex)) + 1,
                             }
                             : w
                     );
@@ -89,7 +88,7 @@ export default function WindowManager() {
                 {
                     id,
                     title,
-                    Component: component, // ← сохраняем ссылку
+                    Component: component,
                     zIndex: maxZ + 1,
                     isMinimized: false,
                     previousSize: null,
@@ -154,7 +153,7 @@ export default function WindowManager() {
     return (
         <>
             <SidebarPanel
-                items={defaultItems}
+                items={sidebarItems}  // ← передаём отфильтрованный список
                 onOpenWindow={(item) =>
                     openOrFocusWindow(item.id, item.title, item.component)
                 }
@@ -170,9 +169,7 @@ export default function WindowManager() {
                     bringToFront={() => bringToFront(win.id)}
                     onClose={() => closeWindow(win.id)}
                     onMinimize={() => minimizeWindow(win.id)}
-                    onMaximize={(state) =>
-                        maximizeWindow(win.id, state)
-                    }
+                    onMaximize={(state) => maximizeWindow(win.id, state)}
                     onRestore={() => restoreWindow(win.id)}
                     previousSize={win.previousSize}
                     previousPosition={win.previousPosition}
