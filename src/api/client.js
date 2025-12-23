@@ -1,8 +1,11 @@
 // src/api/client.js
 import axios from 'axios';
 
+const API_BASE = 'https://evebend.itsconstant.site';
+
+
 const client = axios.create({
-    baseURL: 'http://localhost:4000', // Или process.env.REACT_APP_API_URL
+    baseURL: API_BASE, // Или process.env.REACT_APP_API_URL
     headers: {
         'Content-Type': 'application/json',
     },
